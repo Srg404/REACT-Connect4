@@ -1,0 +1,44 @@
+// -----------------------------------------------------------------------------
+// This file contains all application-wide Sass variables.
+// -----------------------------------------------------------------------------
+
+/// Regular font family
+$font-stack: "Open Sans", sans-serif;
+$font-script: 'Bangers', cursive;
+
+/// Colors
+$link-color: #1d3557;
+
+$text-color: #333333;
+$main-color: #669bbcff;
+$main-color-alpha: #457b9d;
+$main-color-beta: #F0F0D8;
+$color-player-1: #003049ff;
+$color-player-2: #780000ff;
+
+$alert: #e63946;
+
+$very-light-grey: #f3f3f3;
+$light-grey: #e1e1e1;
+$grey: #999999;
+$mid-grey: #3d454b;
+$dark-grey: #282a2c;
+
+$black: #000000;
+$white: #ffffff;
+
+//$assetImagePath : "~@/assets/images";
+
+/// Breakpoints map
+/// @prop {String} keys - Keys are identifiers mapped to a given length
+/// @prop {Map} values - Values are actual breakpoints expressed in pixels
+$breakpoints: (
+  "xs": 540px,
+  "sm": 720px,
+  "md": 960px,
+  "lg": 1140px,
+  "xl": 1320px,
+) !default;
+
+/// Container's maximum width
+$max-width: map-get($breakpoints, "xl") !default;

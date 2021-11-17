@@ -1,0 +1,19 @@
+@import "./assets/scss/fonts.scss";
+@import "./assets/scss/abstracts.scss";
+@import "./assets/scss/main.scss";
+
+[id="app"] {
+  min-height: 100vh;
+  font-family: $font-stack;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: $mid-grey;
+  color: $text-color;
+  & > .container{
+    padding: 25px;
+    display: flex;
+    flex-direction: row;
+    & > .content{
+      flex-grow: 1;
+    }
+  }
+}

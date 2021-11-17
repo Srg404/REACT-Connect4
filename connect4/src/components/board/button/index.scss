@@ -1,0 +1,38 @@
+@import "../../../assets/scss/abstracts.scss";
+
+.button{
+    width: 14.28%;
+    margin: 5px;
+    aspect-ratio: 1 / 1;
+    background: rgba($white, .5);
+    border: 2px dotted $grey;
+    border-radius: 50% 50% 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    &::after{
+        content: "";
+        display: block;
+        width: 0; 
+        height: 0; 
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 10px solid $grey;
+    }
+    .round{
+        display: none;
+        background: transparent;
+        box-shadow: none;
+        border-color: $light-grey;
+        position: absolute;
+        left: 0;
+        right: 0;
+        width: 90%;
+    }
+    &:hover{
+        .round{
+            display: block;
+        }
+    }
+}

@@ -1,0 +1,68 @@
+// -----------------------------------------------------------------------------
+// This file contains very basic styles.
+// -----------------------------------------------------------------------------
+
+html{
+  box-sizing: border-box;
+  *, *::before, *::after {
+    box-sizing: inherit;
+  }
+}
+
+html, body{
+  min-height: 100%;
+}
+
+body{
+  font-family: $font-stack;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: $main-color-beta;
+  color: $text-color;
+  font-size: 16px;
+  line-height: 1.4em;
+}
+
+a{
+  text-decoration: none;
+  &:hover,
+  &:active,
+  &:focus {
+    text-decoration: underline; 
+  }
+}
+
+a[type=button],
+button{
+  cursor: pointer;
+  &:hover,
+  &:active,
+  &:focus {
+    text-decoration: none; 
+  }
+}
+
+img{
+  max-width: 100%;
+  height: auto;
+}
+
+.container{
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+.onlyDesktop{
+  display: block;
+  @include respond-to(sm) {
+    display: none;
+  }
+}
+
+.onlyMobile{
+  display: none;
+  @include respond-to(sm) {
+    display: block;
+  }
+}
