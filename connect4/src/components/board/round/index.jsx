@@ -15,7 +15,7 @@ function Round({status}) {
   }
 
   Round.propTypes = {
-    status: PropTypes.oneOf([0,1,2])
+    status: PropTypes.oneOf([0,1,2,3,4])
   }
   
   export default Round;

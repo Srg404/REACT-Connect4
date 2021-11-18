@@ -34,7 +34,7 @@ function Board() {
   }
 
   // This function test if a coord exist in an array
-  const thisCoordExist = (array, coord) => {    
+  const thisCoordExist = (array, coord) => {
     if ((coord[0] === -1) || (coord[1] === -1)) return false;
     if (array[coord[0]] === undefined) return false;
     if ((coord[0] > array.length) || (coord[1] > array[coord[0]].length)) return false
@@ -77,14 +77,12 @@ function Board() {
 
   // This function test if they are a line of 4 same value (1 or 2) around the coord
   const checkCoord = (coord, direction, type) => {
-
     const coordToCheck = coordToTest(coord, direction, type);
-
     if (coordToCheck.value === currentPlayer) {
       if (areYouWin([coordToCheck.coord[0], coordToCheck.coord[1]])) {
-        youWin(currentPlayer);
         updateTheButtons([false, false, false, false, false, false, false]);
-        return 'You win';
+        youWin(currentPlayer);
+        return false;
       } else {
         checkCoord([coordToCheck.coord[0], coordToCheck.coord[1]], direction, type);
       }
@@ -101,13 +99,13 @@ function Board() {
 
   const checkLastRound = (lastRound) => {
     // Check horizontal
-    checkCoord(lastRound, 'right', 'hori');
+    (counter.length < 3) && checkCoord(lastRound, 'right', 'hori');
     // Check vertical
-    checkCoord(lastRound, 'left', 'vert');
+    (counter.length < 3) && checkCoord(lastRound, 'left', 'vert');
     // Check diagonal 1
-    checkCoord(lastRound, 'right', 'diag1');
+    (counter.length < 3) && checkCoord(lastRound, 'right', 'diag1');
     // Check diagonal 2
-    checkCoord(lastRound, 'right', 'diag2');
+    (counter.length < 3) && checkCoord(lastRound, 'right', 'diag2');
   }
 
   const addRound = (currentPlayer, col) => {
@@ -117,10 +115,8 @@ function Board() {
       if ((el[col] === 0) && !flag) {
         newLine[col] = currentPlayer;
         flag = true;
-
         lastRound = [index, col];
-
-        // Desactiver un bouton si une collone est remplie
+        // disabled button if column is filled
         if (index === theBoard.length - 1) {
           const newButtons = theButtons;
           newButtons[col] = false;
@@ -131,7 +127,7 @@ function Board() {
       return newLine;
     })
 
-    updateTheBoard([...newBoard.reverse()]);    
+    updateTheBoard([...newBoard.reverse()]);
     updateCurrentPlayer(currentPlayer === 1 ? 2 : 1);
     checkLastRound(lastRound);
 
@@ -142,6 +138,15 @@ function Board() {
 
   const youWin = (player) => {
     const winner = (player === 1) ? 'Blue' : 'Red';
+    const status = (player === 1) ? 3 : 4;
+    const winBoard = theBoard;
+
+    winBoard[lastRound[0]][lastRound[1]] = status;
+    counter.map((el) => {
+      winBoard[el[0]][el[1]] = status;
+    });
+    updateTheBoard([...winBoard.reverse()]);
+
     window.alert(`${winner} Win !`);
   }
 
