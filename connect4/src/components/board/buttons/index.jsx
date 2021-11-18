@@ -2,16 +2,16 @@ import './index.scss';
 import PropTypes from 'prop-types';
 import Button from '../button';
 
-function Buttons({disableList,currentValue,addValue}) {
+function Buttons({disableList,currentPlayer,addRound}) {
     return (
       <div className='row'>
         {disableList.map(
             (disable,index) => (
               <Button 
                 key={index} 
-                currentValue={currentValue} 
+                currentPlayer={currentPlayer} 
                 disable={disable}
-                addValue={addValue}
+                addRound={addRound}
                 index={index}
                 />
             )
@@ -20,10 +20,14 @@ function Buttons({disableList,currentValue,addValue}) {
     );
   }
 
+  Buttons.defaultProps = {
+    // addRound: () => {}
+  }
+
   Buttons.propTypes = {
     disableList: PropTypes.array,
-    currentValue: PropTypes.oneOf([0,1,2]),
-    addValue: PropTypes.func,
+    currentPlayer: PropTypes.oneOf([1,2]),
+    addRound: PropTypes.func,
   }
   
   export default Buttons;

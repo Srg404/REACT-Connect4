@@ -2,22 +2,26 @@ import './index.scss';
 import PropTypes from 'prop-types';
 import Round from '../round';
 
-function Button({disable,currentValue,addValue,index}) {
+function Button({disable,currentPlayer,addRound,index}) {
     return (
       <button 
         className="button" 
-        disabled={disable} 
-        onClick={() => addValue(currentValue,index)}
+        disabled={!disable} 
+        onClick={() => addRound(currentPlayer,index)}
         >
-        <Round status={currentValue} />
+        <Round status={currentPlayer} />
       </button>
     );
   }
 
+  Button.defaultProps = {
+    // addRound: () => {}
+  }
+
   Button.propTypes = {
     disabled : PropTypes.bool,
-    currentValue: PropTypes.oneOf([0,1,2]),
-    addValue: PropTypes.func,
+    currentPlayer: PropTypes.oneOf([1,2]),
+    addRound: PropTypes.func,
     index: PropTypes.number,
   }
   

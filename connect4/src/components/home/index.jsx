@@ -1,5 +1,4 @@
 import './index.scss';
-import PropTypes from 'prop-types';
 
 function Home() {
     
@@ -9,10 +8,6 @@ function Home() {
         <button className="btn">Play now</button>
       </div>
     );
-  }
-
-  Home.propTypes = {
-
   }
   
   export default Home;

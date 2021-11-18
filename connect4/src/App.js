@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import './App.scss';
 import PlayerCard from './components/player-card';
 import Board from './components/board';

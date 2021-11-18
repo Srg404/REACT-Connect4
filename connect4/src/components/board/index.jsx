@@ -1,167 +1,172 @@
 import './index.scss';
-import {useState} from 'react';
-import PropTypes from 'prop-types';
+import { useState } from 'react';
 import Row from './row';
 import Buttons from './buttons';
 
 function Board() {
-    
-    const [myTable, updateMyTable] = useState([
-      [0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0],
-    ]);
-    const [btDisable, updateBtDisable] = useState([false,false,false,false,false,false,false]);
-    const [currentValue, updateCurrentValue] = useState(1);
 
-    let lastMove = [];
-    let counter = [];
+  // The Array for the board 
+  const [theBoard, updateTheBoard] = useState([
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+  ]);
 
-  // This function increment counter and return true or false
+  // The Array for show buttons (true = button enable)
+  const [theButtons, updateTheButtons] = useState([true, true, true, true, true, true, true]);
+
+  // the current player value 1 (blue) or 2 (red)
+  const [currentPlayer, updateCurrentPlayer] = useState(1);
+
+  // the position of the last move
+  let lastRound = [];
+
+  // array with coord of each element side by side (if 4 you win)
+  let counter = [];
+
+  // This function add coord in a array and return true if array.length is > 3
   const areYouWin = (element) => {
-    console.log('Are you Win ?');
-    (element) && counter.push([element[0],element[1]]);
+    (element) && counter.push([element[0], element[1]]);
     return (counter.length >= 3) ? true : false
-  } 
+  }
 
-  const thisPosExist = (array,pos) => {
-    if ((pos[0] === -1) || (pos[1] === -1)) return false;
-    if ((pos[0] > array.length) || (pos[1] > array[pos[0]].length)) return false
+  // This function test if a coord exist in an array
+  const thisCoordExist = (array, coord) => {    
+    if ((coord[0] === -1) || (coord[1] === -1)) return false;
+    if (array[coord[0]] === undefined) return false;
+    if ((coord[0] > array.length) || (coord[1] > array[coord[0]].length)) return false
     return true
-  } 
+  }
 
-  // This function return a value to test and the position of this value
-  const toTest = (move,direction,type) => {
-    console.log('move : ',move);
-    let nextMove = [];
+  // This function return a coord(x,y) and his value (0,1,2) to test
+  const coordToTest = (coord, direction, type) => {
+    let nextCoord = [];
     switch (type) {
       case 'vert':
-        nextMove = (direction === 'right') ? [move[0]+1,move[1]] : [move[0]-1,move[1]];
+        nextCoord = (direction === 'right') ? [coord[0] + 1, coord[1]] : [coord[0] - 1, coord[1]];
         break;
       case 'hori':
-        nextMove = (direction === 'right') ? [move[0],move[1]+1] : [move[0],move[1]-1];
+        nextCoord = (direction === 'right') ? [coord[0], coord[1] + 1] : [coord[0], coord[1] - 1];
         break;
       case 'diag1':
-        nextMove = (direction === 'right') ? [move[0]+1,move[1]+1] : [move[0]-1,move[1]-1];
+        nextCoord = (direction === 'right') ? [coord[0] + 1, coord[1] + 1] : [coord[0] - 1, coord[1] - 1];
         break;
       case 'diag2':
-        nextMove = (direction === 'right') ? [move[0]+1,move[1]-1] : [move[0]-1,move[1]+1];
+        nextCoord = (direction === 'right') ? [coord[0] + 1, coord[1] - 1] : [coord[0] - 1, coord[1] + 1];
         break;
       default:
-        console.log(`Sorry, only this values are authorized 'vert','hori','diag1','diag2'`);
+        console.info(`Sorry, the function "coordToTest" authorize only this values 'vert','hori','diag1','diag2'`);
     }
 
-    // function de test l'existance de la position dans le tableau (return true or false)
-    if (thisPosExist(myTable,[nextMove[0],nextMove[1]])) {
+    if (thisCoordExist(theBoard, [nextCoord[0], nextCoord[1]])) {
       return {
-        value : myTable[nextMove[0]][nextMove[1]],
-        pos: nextMove
+        value: theBoard[nextCoord[0]][nextCoord[1]],
+        coord: nextCoord
       }
-    }else {
+    } else {
       return {
-        value : null,
-        pos: null
+        value: null,
+        coord: null
       }
     }
-    
+
   }
 
-    const checkMove = (move,direction,type) => {
-      console.log(type);
-      const valueToTest = toTest(move,direction,type);
-      console.log(valueToTest);
-    // une fonction qui s'auto appelle (valeur a tester [Y,X], Direction [left,right], type de ligne[vert,hori,diag1,diag2])
-      //  - tester si la case est de la bonne couleur alors ajouter au tableau de comptage (counter) sinon on arrete (reset counter) ou on change de sens (direction)
-      //    tester si on est au bout du tableau et si oui changer de sens (direction) ou arrter (reset counter)
-      //  - si le tableau de comptage est rempli vous avez gagner sinon on relance la fonction avec une incrementation
-  
-      if (valueToTest.value === currentValue) {
-        if (areYouWin([valueToTest.pos[0],valueToTest.pos[1]])) {
-          window.alert('You Win !');
-          updateBtDisable([true,true,true,true,true,true,true]);
-          return 'You win';
-        } else{
-          checkMove([valueToTest.pos[0],valueToTest.pos[1]],direction,type);
-        }
-      } else{ 
-        if (direction === 'right') {
-          direction = 'left';
-          checkMove([lastMove[0],lastMove[1]],direction,type);
-        } else {
-          // Reset counter
-          counter = []
-        }
+  // This function test if they are a line of 4 same value (1 or 2) around the coord
+  const checkCoord = (coord, direction, type) => {
+
+    const coordToCheck = coordToTest(coord, direction, type);
+
+    if (coordToCheck.value === currentPlayer) {
+      if (areYouWin([coordToCheck.coord[0], coordToCheck.coord[1]])) {
+        youWin(currentPlayer);
+        updateTheButtons([false, false, false, false, false, false, false]);
+        return 'You win';
+      } else {
+        checkCoord([coordToCheck.coord[0], coordToCheck.coord[1]], direction, type);
+      }
+    } else {
+      if (direction === 'right') {
+        direction = 'left';
+        checkCoord([lastRound[0], lastRound[1]], direction, type);
+      } else {
+        // Reset counter
+        counter = []
       }
     }
+  }
 
-    const checkLastMove = (lastMove) => {
-      console.log('lastMove => ',lastMove);
-      // Check horizontal
-      checkMove(lastMove,'right','hori');
-      // Check vertical
-      checkMove(lastMove,'left','vert');
-      // Check diagonal 1
-      checkMove(lastMove,'right','diag1');
-      // Check diagonal 2
-      checkMove(lastMove,'right','diag2');
-    }
+  const checkLastRound = (lastRound) => {
+    // Check horizontal
+    checkCoord(lastRound, 'right', 'hori');
+    // Check vertical
+    checkCoord(lastRound, 'left', 'vert');
+    // Check diagonal 1
+    checkCoord(lastRound, 'right', 'diag1');
+    // Check diagonal 2
+    checkCoord(lastRound, 'right', 'diag2');
+  }
 
-    const addValue = (val,col) => {
-      let flag = false;
-      const newTable = myTable.reverse().map((el,index) => {
-        let newLine = el;
-        if ((el[col] === 0) && !flag) {
-          newLine[col] = val;
-          flag = true;
-  
-          lastMove = [index,col];
-  
-          // Desactiver un bouton si une collone est remplie
-          if (index === myTable.length - 1) { 
-            const newBtDisable = btDisable;
-            newBtDisable[col] = true;
-            updateBtDisable(newBtDisable);
-          };
-  
-        }
-        return newLine;
-      })
-  
-      updateMyTable([...newTable.reverse()]);
-      updateCurrentValue(currentValue === 1 ? 2 : 1);
-  
-      checkLastMove(lastMove);
-  
-      // fin du jeux si toutes les collone sont remplie
-      if ( btDisable.filter((el) => el).length === myTable.length +1 ) { window.alert('GameOver') }
-  
-    }
+  const addRound = (currentPlayer, col) => {
+    let flag = false;
+    const newBoard = theBoard.reverse().map((el, index) => {
+      let newLine = el;
+      if ((el[col] === 0) && !flag) {
+        newLine[col] = currentPlayer;
+        flag = true;
 
-    return (
-      <div className='board'>
-        <div className="buttons">
-          <Buttons 
-            disableList={btDisable} 
-            currentValue={currentValue}
-            addValue={addValue}
-          />
-        </div>
-        <div className="board-table">
-          {myTable.map(
-            (row,index) => (
-              <Row key={index} row={row}/>
-            )
-          )}
-        </div>
+        lastRound = [index, col];
+
+        // Desactiver un bouton si une collone est remplie
+        if (index === theBoard.length - 1) {
+          const newButtons = theButtons;
+          newButtons[col] = false;
+          updateTheButtons(newButtons);
+        };
+
+      }
+      return newLine;
+    })
+
+    updateTheBoard([...newBoard.reverse()]);    
+    updateCurrentPlayer(currentPlayer === 1 ? 2 : 1);
+    checkLastRound(lastRound);
+
+    // Game over if all collumns are filled
+    if (theButtons.filter((el) => !el).length === theBoard.length + 1) { gameOver() }
+
+  }
+
+  const youWin = (player) => {
+    const winner = (player === 1) ? 'Blue' : 'Red';
+    window.alert(`${winner} Win !`);
+  }
+
+  const gameOver = () => {
+    window.alert('GameOver')
+  }
+
+  return (
+    <div className='board'>
+      <div className="buttons">
+        <Buttons
+          disableList={theButtons}
+          currentPlayer={currentPlayer}
+          addRound={addRound}
+        />
       </div>
-    );
-  }
+      <div className="board-table">
+        {theBoard.map(
+          (row, index) => (
+            <Row key={index} row={row} />
+          )
+        )}
+      </div>
+    </div>
+  );
+}
 
-  Board.propTypes = {
-
-  }
-  
-  export default Board;
+export default Board;
