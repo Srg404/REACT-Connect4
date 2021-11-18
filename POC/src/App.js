@@ -109,7 +109,7 @@ function App() {
     // Check horizontal
     checkMove(lastMove,'right','hori');
     // Check vertical
-    checkMove(lastMove,'right','vert');
+    checkMove(lastMove,'left','vert');
     // Check diagonal 1
     checkMove(lastMove,'right','diag1');
     // Check diagonal 2

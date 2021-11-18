@@ -2,23 +2,28 @@ import './index.scss';
 import PropTypes from 'prop-types';
 import Button from '../button';
 
-function Row() {
-    
+function Buttons({disableList,currentValue,addValue}) {
     return (
       <div className='row'>
-        <Button status={0} />
-        <Button status={0} />
-        <Button status={1} />
-        <Button status={2} />
-        <Button status={0} />
-        <Button status={0} />
-        <Button status={0} />
+        {disableList.map(
+            (disable,index) => (
+              <Button 
+                key={index} 
+                currentValue={currentValue} 
+                disable={disable}
+                addValue={addValue}
+                index={index}
+                />
+            )
+        )}
       </div>
     );
   }
 
-  Row.propTypes = {
-
+  Buttons.propTypes = {
+    disableList: PropTypes.array,
+    currentValue: PropTypes.oneOf([0,1,2]),
+    addValue: PropTypes.func,
   }
   
-  export default Row;
+  export default Buttons;
