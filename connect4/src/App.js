@@ -6,7 +6,7 @@ import Home from './components/home';
 
 function App() {
 
-  const [start, updateStart] = useState(false);
+  const [start, setStart] = useState(false);
 
   if (start) {
     return (
@@ -25,7 +25,7 @@ function App() {
     return (
       <div className="app" id="app">      
         <div className="container">
-          <Home updateStart={updateStart}/>
+          <Home setStart={setStart}/>
         </div>
       </div>
     );

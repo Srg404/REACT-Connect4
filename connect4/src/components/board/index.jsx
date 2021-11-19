@@ -7,10 +7,10 @@ import PlayerPicture from '../player-picture';
 
 function Board() {
 
-  const [modalIsOpen, updateModalIsOpen] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   // The Array for the board 
-  const [theBoard, updateTheBoard] = useState([
+  const [theBoard, setTheBoard] = useState([
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],
@@ -19,11 +19,11 @@ function Board() {
     [0, 0, 0, 0, 0, 0, 0],
   ]);
 
-  // The Array for show buttons (true = button enable)
-  const [theButtons, updateTheButtons] = useState([true, true, true, true, true, true, true]);
+  // The Array for enable/disable buttons (true = enable)
+  const [theButtons, setTheButtons] = useState([true, true, true, true, true, true, true]);
 
   // the current player value 1 (blue) or 2 (red)
-  const [currentPlayer, updateCurrentPlayer] = useState(1);
+  const [currentPlayer, setCurrentPlayer] = useState(1);
 
   // the position of the last move
   let lastRound = [];
@@ -31,7 +31,7 @@ function Board() {
   // array with coord of each element side by side around lastRound (if 3 you win)
   let counter = [];
 
-  // This function add coord in a array and return true if array.length is > 3
+  // This function add coord in a [counter] and return true if this [counter].length is > 3
   const areYouWin = (element) => {
     (element) && counter.push([element[0], element[1]]);
     return (counter.length >= 3) ? true : false
@@ -45,7 +45,7 @@ function Board() {
     return true
   }
 
-  // This function return a coord(x,y) and his value (0,1,2) to test
+  // This function return a coord(x,y) and a value (0,1,2) for test
   const coordToTest = (coord, direction, type) => {
     let nextCoord = [];
     switch (type) {
@@ -84,7 +84,7 @@ function Board() {
     const coordToCheck = coordToTest(coord, direction, type);
     if (coordToCheck.value === currentPlayer) {
       if (areYouWin([coordToCheck.coord[0], coordToCheck.coord[1]])) {
-        updateTheButtons([false, false, false, false, false, false, false]);
+        setTheButtons([false, false, false, false, false, false, false]);
         youWin(currentPlayer);
         return false;
       } else {
@@ -124,15 +124,15 @@ function Board() {
         if (index === theBoard.length - 1) {
           const newButtons = theButtons;
           newButtons[col] = false;
-          updateTheButtons(newButtons);
+          setTheButtons(newButtons);
         };
 
       }
       return newLine;
     })
 
-    updateTheBoard([...newBoard.reverse()]);
-    updateCurrentPlayer(currentPlayer === 1 ? 2 : 1);
+    setTheBoard([...newBoard.reverse()]);
+    setCurrentPlayer(currentPlayer === 1 ? 2 : 1);
     checkLastRound(lastRound);
 
     // Game over if all collumns are filled
@@ -141,7 +141,7 @@ function Board() {
   }
 
   const resetGame = () => {
-    updateTheBoard([
+    setTheBoard([
       [0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0],
@@ -149,18 +149,18 @@ function Board() {
       [0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0],
     ]);
-    updateTheButtons([true, true, true, true, true, true, true]);
-    updateCurrentPlayer(1);
+    setTheButtons([true, true, true, true, true, true, true]);
+    setCurrentPlayer(1);
     lastRound = [];
     counter = [];
   }
 
   const openModal = () => {
-    updateModalIsOpen(true);
+    setModalIsOpen(true);
   }
 
   const closeModal = () => {
-    updateModalIsOpen(false);
+    setModalIsOpen(false);
     resetGame();
  
   }
@@ -174,9 +174,9 @@ function Board() {
     counter.forEach((el) => {
       winBoard[el[0]][el[1]] = status;
     });
-    updateTheBoard([...winBoard.reverse()]);
+    setTheBoard([...winBoard.reverse()]);
 
-    updateCurrentPlayer(player);
+    setCurrentPlayer(player);
 
     setTimeout(() => {
       openModal();
