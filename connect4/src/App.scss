@@ -13,6 +13,7 @@
     padding: 25px;
     display: flex;
     flex-direction: row;
+    align-items: flex-start;
     & > .content{
       flex-grow: 1;
     }

@@ -17,10 +17,32 @@ body{
   font-family: $font-stack;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: $main-color-beta;
+  background-color: $white;
   color: $text-color;
   font-size: 16px;
   line-height: 1.4em;
+  &::after{
+    content: "";
+    position: fixed;
+    width: 100%;
+    background-color: $main-color-alpha;
+    height: 30px;
+    top: 25%;
+    left: 0;
+    right: 0;
+    z-index: -1;
+  }
+  &::before{
+    content: "";
+    position: fixed;
+    width: 100%;
+    background-color: $background-color;
+    height: 75%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+  }
 }
 
 a{
