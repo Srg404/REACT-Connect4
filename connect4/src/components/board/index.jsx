@@ -2,8 +2,12 @@ import './index.scss';
 import { useState } from 'react';
 import Row from './row';
 import Buttons from './buttons';
+import Modal from 'react-modal';
+import PlayerPicture from '../player-picture';
 
 function Board() {
+
+  const [modalIsOpen, updateModalIsOpen] = useState(false);
 
   // The Array for the board 
   const [theBoard, updateTheBoard] = useState([
@@ -24,7 +28,7 @@ function Board() {
   // the position of the last move
   let lastRound = [];
 
-  // array with coord of each element side by side (if 4 you win)
+  // array with coord of each element side by side around lastRound (if 3 you win)
   let counter = [];
 
   // This function add coord in a array and return true if array.length is > 3
@@ -136,18 +140,48 @@ function Board() {
 
   }
 
+  const resetGame = () => {
+    updateTheBoard([
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+    ]);
+    updateTheButtons([true, true, true, true, true, true, true]);
+    updateCurrentPlayer(1);
+    lastRound = [];
+    counter = [];
+  }
+
+  const openModal = () => {
+    updateModalIsOpen(true);
+  }
+
+  const closeModal = () => {
+    updateModalIsOpen(false);
+    resetGame();
+ 
+  }
+
   const youWin = (player) => {
-    const winner = (player === 1) ? 'Blue' : 'Red';
+    // const winner = (player === 1) ? 'Blue' : 'Red';
     const status = (player === 1) ? 3 : 4;
     const winBoard = theBoard;
 
     winBoard[lastRound[0]][lastRound[1]] = status;
-    counter.map((el) => {
+    counter.forEach((el) => {
       winBoard[el[0]][el[1]] = status;
     });
     updateTheBoard([...winBoard.reverse()]);
 
-    window.alert(`${winner} Win !`);
+    updateCurrentPlayer(player);
+
+    setTimeout(() => {
+      openModal();
+    }, 1000);
+    
   }
 
   const gameOver = () => {
@@ -155,22 +189,35 @@ function Board() {
   }
 
   return (
-    <div className='board'>
-      <div className="buttons">
-        <Buttons
-          disableList={theButtons}
-          currentPlayer={currentPlayer}
-          addRound={addRound}
-        />
+    <>
+      <div className='board'>
+        <div className="buttons">
+          <Buttons
+            disableList={theButtons}
+            currentPlayer={currentPlayer}
+            addRound={addRound}
+          />
+        </div>
+        <div className="board-table">
+          {theBoard.map(
+            (row, index) => (
+              <Row key={index} row={row} />
+            )
+          )}
+        </div>
       </div>
-      <div className="board-table">
-        {theBoard.map(
-          (row, index) => (
-            <Row key={index} row={row} />
-          )
-        )}
-      </div>
-    </div>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        closeTimeoutMS={250}
+        className='modal__content'
+        overlayClassName='modal__overlay'
+      >
+        <PlayerPicture player={`player-${currentPlayer}`} />
+        <h2>Player {(currentPlayer === 1) ? "Blue" : "Red"} Win !</h2>
+        <button onClick={closeModal} className='btn'>Play again</button>
+      </Modal>
+    </>
   );
 }
 

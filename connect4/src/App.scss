@@ -9,6 +9,7 @@
   -moz-osx-font-smoothing: $mid-grey;
   color: $text-color;
   & > .container{
+    height: 100vh;
     padding: 25px;
     display: flex;
     flex-direction: row;
