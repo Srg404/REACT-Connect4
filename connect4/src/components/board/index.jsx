@@ -125,10 +125,9 @@ function Board() {
           newButtons[col] = false;
           setTheButtons(newButtons);
         };
-
       }
       return newLine;
-    })
+    });
 
     setTheBoard([...newBoard.reverse()]);
     setCurrentPlayer(currentPlayer === 1 ? 2 : 1);
@@ -161,7 +160,6 @@ function Board() {
   const closeModal = () => {
     setModalIsOpen(false);
     resetGame();
- 
   }
 
   const youWin = (player) => {
@@ -179,8 +177,8 @@ function Board() {
 
     setTimeout(() => {
       openModal();
-    }, 1000);
-    
+    }, 250);
+
   }
 
   const gameOver = () => {
@@ -205,8 +203,8 @@ function Board() {
           )}
         </div>
       </div>
-      <ModalInfo 
-        modalIsOpen={modalIsOpen} 
+      <ModalInfo
+        modalIsOpen={modalIsOpen}
         closeModal={closeModal}
         currentPlayer={currentPlayer}
       />
