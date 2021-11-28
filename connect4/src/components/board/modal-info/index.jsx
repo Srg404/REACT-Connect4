@@ -28,7 +28,9 @@ function ModalInfo({modalIsOpen,currentPlayer,closeModal}) {
   }
 
   ModalInfo.propTypes = {
-    
+    modalIsOpen: PropTypes.bool,
+    currentPlayer: PropTypes.oneOf([1, 2]),
+    closeModal: PropTypes.func
   }
   
   export default ModalInfo;
