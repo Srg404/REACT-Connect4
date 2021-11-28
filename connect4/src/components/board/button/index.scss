@@ -20,6 +20,15 @@
         border-right: 10px solid transparent;
         border-top: 10px solid $grey;
     }
+    &::before{
+        content:'';
+        display: block;
+        width: 100%;
+        position: absolute;
+        height: 2500px;
+        background: transparent;
+        z-index: 100;
+    }
     .round{
         display: none;
         background: transparent;
