@@ -13,7 +13,7 @@
     }
     h2{
         margin: 10px 0;
-        color: $white;
+        color: currentcolor;
         font-size: 2.5em;
         font-weight: 900;
         text-transform: uppercase;
@@ -21,16 +21,14 @@
     &::after{
         content: "";
         position: absolute;
-        left: 15px;
         top: 15px;
         width: 0; 
         height: 0; 
         border-left: 20px solid transparent;
         border-right: 20px solid transparent;
         border-bottom: 20px solid currentColor;
-        transform: translate(-20px, -10px) rotate(-45deg);
+        z-index: 2;
     }
-
     &::before{
         content: "";
         display: block;
@@ -50,6 +48,20 @@
         mix-blend-mode: difference;
         opacity: .75;
         z-index: 1;
+    }
+    &.player-1{
+        color: $color-player-1;
+        &::after{
+            right: 15px;
+            transform: translate(20px, -10px) rotate(45deg);
+        }
+    }
+    &.player-2{
+        color: $color-player-2;
+        &::after{
+            left: 15px;
+            transform: translate(-20px, -10px) rotate(-45deg);
+        }
     }
 
 }

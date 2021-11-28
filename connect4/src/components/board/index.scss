@@ -23,37 +23,3 @@
         }
     }
 }
-
-.modal__content{
-    position: absolute; 
-    inset: 40px; 
-    border: 7px solid $main-color-alpha; 
-    background: rgb(255, 255, 255) none repeat scroll 0% 0%; 
-    overflow: auto; 
-    border-radius: 4px; 
-    outline: currentcolor none medium; 
-    padding: 20px;
-}
-.modal__overlay{
-    position: fixed; 
-    z-index: 999;
-    inset: 0px; 
-    background-color: rgba($black, 0.75);
-}
-
-.ReactModal__Overlay {
-    opacity: 0;
-    transition: opacity 250ms ease-in-out;
-}
-
-.ReactModal__Overlay--after-open{
-    opacity: 1;
-}
-
-.ReactModal__Overlay--before-close{
-    opacity: 0;
-}
-
-.ReactModal__Overlay--after-close{
-    opacity: 0;
-}

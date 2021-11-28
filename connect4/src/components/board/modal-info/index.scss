@@ -1,0 +1,61 @@
+@import "../../../assets/scss/abstracts.scss";
+
+.modal__content{
+    position: absolute; 
+    inset: 40px; 
+    border: 7px solid $main-color-alpha; 
+    background: rgb(255, 255, 255) none repeat scroll 0% 0%; 
+    overflow: auto; 
+    border-radius: 4px; 
+    outline: currentcolor none medium; 
+    padding: 50px;
+    margin: auto;
+
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+
+    text-align: center;
+    h2{
+        font-size: 2em;
+        margin: .5em;
+    }
+    .who-win{
+        display: flex;
+        align-items: center;
+        .trophy{
+            transform: translateX(20px)
+        }
+        .player-picture{
+            transform: translateX(-20px)
+        }
+    }
+
+}
+.modal__overlay{
+    position: fixed; 
+    z-index: 999;
+    inset: 0px; 
+    background-color: rgba($black, 0.85);
+}
+
+.ReactModal__Overlay {
+    opacity: 0;
+    transition: opacity 250ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open{
+    opacity: 1;
+}
+
+.ReactModal__Overlay--before-close{
+    opacity: 0;
+}
+
+.ReactModal__Overlay--after-close{
+    opacity: 0;
+}
+
+

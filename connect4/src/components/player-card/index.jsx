@@ -4,10 +4,9 @@ import './index.scss';
 
 function PlayerCard({player}) {
         
-    const id = player.replace(/[^a-zA-Z0-9]/g,'-').toLowerCase();
     const playerIs = (player === "player-1") ? "blue" : "red"
     return (
-      <div className={`player-card ${id}`}>
+      <div className={`player-card ${player}`}>
         <PlayerPicture player={player}/>
         <h2>{playerIs}</h2>
       </div>

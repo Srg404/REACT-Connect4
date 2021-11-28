@@ -2,8 +2,7 @@ import './index.scss';
 import { useState } from 'react';
 import Row from './row';
 import Buttons from './buttons';
-import Modal from 'react-modal';
-import PlayerPicture from '../player-picture';
+import ModalInfo from './modal-info';
 
 function Board() {
 
@@ -206,17 +205,11 @@ function Board() {
           )}
         </div>
       </div>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        closeTimeoutMS={250}
-        className='modal__content'
-        overlayClassName='modal__overlay'
-      >
-        <PlayerPicture player={`player-${currentPlayer}`} />
-        <h2>Player {(currentPlayer === 1) ? "Blue" : "Red"} Win !</h2>
-        <button onClick={closeModal} className='btn'>Play again</button>
-      </Modal>
+      <ModalInfo 
+        modalIsOpen={modalIsOpen} 
+        closeModal={closeModal}
+        currentPlayer={currentPlayer}
+      />
     </>
   );
 }
