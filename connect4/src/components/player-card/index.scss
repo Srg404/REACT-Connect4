@@ -7,6 +7,7 @@
     text-align: center;
     padding: 20px;
     margin-top: 50px;
+    transition: border .25s ease;
     * {
         position: relative;
         z-index: 2;
@@ -26,8 +27,9 @@
         height: 0; 
         border-left: 20px solid transparent;
         border-right: 20px solid transparent;
-        border-bottom: 20px solid currentColor;
+        border-bottom: 20px solid $main-color-beta;
         z-index: 2;
+        transition: border .25s ease;
     }
     &::before{
         content: "";
@@ -51,6 +53,12 @@
     }
     &.player-1{
         color: $color-player-1;
+        &.active{
+            border-color: $color-player-1;
+            &::after{
+                border-bottom-color: $color-player-1;
+            }
+        }
         &::after{
             right: 15px;
             transform: translate(20px, -10px) rotate(45deg);
@@ -58,6 +66,12 @@
     }
     &.player-2{
         color: $color-player-2;
+        &.active{
+            border-color: $color-player-2;
+            &::after{
+                border-bottom-color: $color-player-2;
+            }
+        }
         &::after{
             left: 15px;
             transform: translate(-20px, -10px) rotate(-45deg);

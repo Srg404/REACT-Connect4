@@ -7,18 +7,28 @@ import Home from './components/home';
 function App() {
 
   const [start, setStart] = useState(false);
+  const [currentPlayer, setCurrentPlayer] = useState(1);
+
+  const updatePlayer = (val) => {
+    setCurrentPlayer(val);
+  }
 
   if (start) {
     return (
-      <div className="app" id="app">      
+      <div className="app" id="app">
         <div className="container">
-          <PlayerCard player="player-1"></PlayerCard>
+          <PlayerCard 
+            player="player-1"
+            active={(currentPlayer === 1) ? true : false}
+          ></PlayerCard>
           <div className="content">
-            <Board />
+            <Board updatePlayer={updatePlayer}/>
           </div>
-          <PlayerCard player="player-2"></PlayerCard>
+          <PlayerCard 
+            player="player-2"
+            active={(currentPlayer === 2) ? true : false}  
+          ></PlayerCard>
         </div>
-        
       </div>
     );
   }else{

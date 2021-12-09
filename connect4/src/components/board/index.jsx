@@ -1,10 +1,10 @@
 import './index.scss';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Row from './row';
 import Buttons from './buttons';
 import ModalInfo from './modal-info';
 
-function Board() {
+function Board({updatePlayer}) {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -29,6 +29,13 @@ function Board() {
 
   // array with coord of each element side by side around lastRound (if 3 you win)
   let counter = [];
+
+  // update value for some sibling component
+  // TODO : Try to find a better soltion for this (useEffect seems not correct)
+  useEffect(() => {
+    updatePlayer(currentPlayer);
+    // eslint-disable-next-line
+  }, [currentPlayer])
 
   // This function add coord in a [counter] and return true if this [counter].length is > 3
   const areYouWin = (element) => {
@@ -75,7 +82,6 @@ function Board() {
         coord: null
       }
     }
-
   }
 
   // This function test if they are a line of 4 same value (1 or 2) around the coord
@@ -172,7 +178,6 @@ function Board() {
       winBoard[el[0]][el[1]] = status;
     });
     setTheBoard([...winBoard.reverse()]);
-
     setCurrentPlayer(player);
 
     setTimeout(() => {
